@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun filterBadWords(text: String): String {
-        val badWords = listOf("****", "*****", "******") // Список запрещенных слов
+        val badWords = listOf("сука", "блять", "епта") // Список запрещенных слов
         var filteredText = text
         badWords.forEach { badWord ->
             val regex = Regex("(?i)\\b$badWord\\b") // Создаем регулярное выражение, игнорируя регистр

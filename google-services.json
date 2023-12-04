@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "602166567939-eldm4g656ocftl2upasd21hfkkvjkt23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wclchat",
+            "certificate_hash": "c16bf9b7d46fd893f806e8c6c68f059e1a1cbf31"
+          }
+        },
+        {
           "client_id": "602166567939-2tclke857j4gigqjhoff4rs9pl743rie.apps.googleusercontent.com",
           "client_type": 3
         }

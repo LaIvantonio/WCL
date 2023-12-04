@@ -19,6 +19,9 @@
         android:theme="@style/Theme.WCLChat"
         tools:targetApi="31">
         <activity
+            android:name="PreferencesActivity"
+            android:exported="true"/>
+        <activity
             android:name=".GPSActivity"
             android:exported="true" />
         <activity

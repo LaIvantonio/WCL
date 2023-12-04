@@ -1,5 +1,6 @@
 package com.example.wclchat
 
+import PreferencesActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class SignInAct : ComponentActivity() {
@@ -90,4 +95,41 @@ class SignInAct : ComponentActivity() {
             startActivity(i)
         }
     }
+
+    private fun checkUserPreferences() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            val databaseReference = Firebase.database.getReference("usersPreferences")
+            databaseReference.child(userId).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (!snapshot.exists()) {
+                        // Пользователь новый, нет предпочтений, перенаправляем на экран предпочтений
+                        openPreferencesScreen()
+                    } else {
+                        // Пользователь существует, предпочтения найдены, перенаправляем на главный экран
+                        openMainScreen()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Обработка ошибок, например, показать сообщение
+                }
+            })
+        }
+
+    }
+    private fun openPreferencesScreen() {
+        val intent = Intent(this, PreferencesActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    private fun openMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // закрыть текущую активность после перехода
+    }
+
+
 }

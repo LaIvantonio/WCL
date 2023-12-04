@@ -8,6 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.wclchat.db.MainDb
 import com.example.wclchat.db.TrackItem
 import com.example.wclchat.location.LocationModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
@@ -26,6 +29,13 @@ class MainViewModel(db: MainDb) : ViewModel() {
         dao.deleteTrack(trackItem)
     }
 
+    fun savePreferences(preferences: Preferences) = viewModelScope.launch {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        userId?.let {
+            val databaseReference = Firebase.database.getReference("usersPreferences")
+            databaseReference.child(it).setValue(preferences)
+        }
+    }
     class ViewModelFactory(private val db: MainDb) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(MainViewModel::class.java)){
