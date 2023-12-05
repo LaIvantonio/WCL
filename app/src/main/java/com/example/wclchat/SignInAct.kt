@@ -55,6 +55,7 @@ class SignInAct : ComponentActivity() {
             } catch (e: ApiException) {
                 Log.d("MyLog", "Api exception")
             }
+            checkUserPreferences()
         }
 
         binding.bSignIn.setOnClickListener {
@@ -98,38 +99,38 @@ class SignInAct : ComponentActivity() {
 
     private fun checkUserPreferences() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
+        Log.d("SignInAct", "Checking user preferences for user ID: $userId")
         if (userId != null) {
             val databaseReference = Firebase.database.getReference("usersPreferences")
-            databaseReference.child(userId).addListenerForSingleValueEvent(object :
-                ValueEventListener {
+            databaseReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    Log.d("SignInAct", "User preferences data snapshot: $snapshot")
                     if (!snapshot.exists()) {
-                        // Пользователь новый, нет предпочтений, перенаправляем на экран предпочтений
+                        Log.d("SignInAct", "No preferences found, opening PreferencesActivity")
                         openPreferencesScreen()
                     } else {
-                        // Пользователь существует, предпочтения найдены, перенаправляем на главный экран
+                        Log.d("SignInAct", "Preferences found, opening MainActivity")
                         openMainScreen()
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Обработка ошибок, например, показать сообщение
+                    Log.d("SignInAct", "Database error: $error")
                 }
             })
+        } else {
+            Log.d("SignInAct", "User ID is null, cannot check preferences")
         }
-
     }
+
     private fun openPreferencesScreen() {
         val intent = Intent(this, PreferencesActivity::class.java)
         startActivity(intent)
     }
 
-
     private fun openMainScreen() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // закрыть текущую активность после перехода
+        finish() // Если вы хотите закрыть текущую активность после перехода
     }
-
-
 }
