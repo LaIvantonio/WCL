@@ -1,6 +1,5 @@
 package com.example.wclchat
 
-import PreferencesActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -55,12 +54,14 @@ class SignInAct : ComponentActivity() {
             } catch (e: ApiException) {
                 Log.d("MyLog", "Api exception")
             }
+
         }
 
         binding.bSignIn.setOnClickListener {
             signInWithGoogle()
         }
         checkAuthState()
+        checkUserPreferences()
     }
 
     private fun getClient(): GoogleSignInClient {
@@ -70,6 +71,7 @@ class SignInAct : ComponentActivity() {
            .requestEmail()
            .build()
         return GoogleSignIn.getClient(this, gso)
+
     }
 
     private fun signInWithGoogle() {
@@ -96,40 +98,40 @@ class SignInAct : ComponentActivity() {
         }
     }
 
+    // Этот метод вызывается при создании активности, чтобы проверить, есть ли у текущего пользователя сохраненные предпочтения
     private fun checkUserPreferences() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
             val databaseReference = Firebase.database.getReference("usersPreferences")
-            databaseReference.child(userId).addListenerForSingleValueEvent(object :
-                ValueEventListener {
+            databaseReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (!snapshot.exists()) {
-                        // Пользователь новый, нет предпочтений, перенаправляем на экран предпочтений
+                        // Предпочтения не найдены, открываем экран настроек предпочтений
                         openPreferencesScreen()
                     } else {
-                        // Пользователь существует, предпочтения найдены, перенаправляем на главный экран
+                        // Предпочтения найдены, открываем главный экран
                         openMainScreen()
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Обработка ошибок, например, показать сообщение
+                    // Обработка ошибки
                 }
             })
+        } else {
+            // Пользователь не вошел в систему, показываем экран входа или регистрации
         }
-
     }
+
+
     private fun openPreferencesScreen() {
         val intent = Intent(this, PreferencesActivity::class.java)
         startActivity(intent)
     }
 
-
     private fun openMainScreen() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // закрыть текущую активность после перехода
+        finish() // Если вы хотите закрыть текущую активность после перехода
     }
-
-
 }

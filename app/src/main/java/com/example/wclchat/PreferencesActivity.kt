@@ -1,14 +1,15 @@
+package com.example.wclchat
+
+
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.wclchat.MainViewModel
-import com.example.wclchat.Preferences
 import com.example.wclchat.databinding.ActivityPreferencesBinding
 
 class PreferencesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPreferencesBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels { MainViewModel.ViewModelFactory((application as MainApp).database) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

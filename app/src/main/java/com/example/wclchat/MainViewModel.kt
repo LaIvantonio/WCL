@@ -36,6 +36,7 @@ class MainViewModel(db: MainDb) : ViewModel() {
             databaseReference.child(it).setValue(preferences)
         }
     }
+
     class ViewModelFactory(private val db: MainDb) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(MainViewModel::class.java)){
@@ -44,4 +45,15 @@ class MainViewModel(db: MainDb) : ViewModel() {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
+    fun loadCurrentWeather() {
+        val weatherRepository = WeatherRepository()
+        weatherRepository.getCurrentWeather("Rostov-on-Don", "e21e043d5b5c1cd57ab00cf3f656a7bb") { weatherResponse ->
+            if (weatherResponse != null) {
+                // Обновите UI или логику приложения с новыми данными о погоде
+            } else {
+                // Обработка ошибки
+            }
+        }
+    }
 }
+
