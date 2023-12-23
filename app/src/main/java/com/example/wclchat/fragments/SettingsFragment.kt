@@ -11,6 +11,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var timePref: Preference
     private lateinit var colorPref: Preference
 
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.main_preference, rootKey)
         init()
