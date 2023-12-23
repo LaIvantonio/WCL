@@ -7,9 +7,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wclchat.databinding.ActivityMainBinding
+import com.example.wclchat.db.MainDb
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -31,10 +33,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        val roomDatabase = MainDb.getDatabase(this)
+        val firebaseDatabase = Firebase.database
+        val factory = MainViewModel.ViewModelFactory(roomDatabase)
+        val viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
         auth = Firebase.auth
-        val database = Firebase.database
-        val myRef = database.getReference("message")
+
+        val myRef = firebaseDatabase.getReference("message")
         binding.bSend.setOnClickListener {
             val messageText = binding.edMessage.text.toString().trim()
 
@@ -65,9 +71,9 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        binding.navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.wcl_chat -> {
+                R.id.nav_quests -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -79,6 +85,14 @@ class MainActivity : AppCompatActivity() {
                     auth.signOut()
                     finish()
                 }
+                R.id.nav_quests -> {
+                    // Открыть QuestsFragment
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, QuestsFragment())
+                        .addToBackStack(null)
+                        .commit()
+                    true
+                }
             }
             binding.drawerLayout.closeDrawers()
             true
@@ -86,8 +100,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
+        menu?.clear()
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

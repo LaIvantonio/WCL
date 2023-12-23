@@ -21,4 +21,17 @@
         <item>#FFFF0000</item>
         <item>#FF000000</item>
     </string-array>
+
+    <string-array name="preferences_name">
+        <item>Monuments</item>
+        <item>Museums</item>
+        <item>Parks</item>
+        <item>Theaters</item>
+    </string-array>
+    <string-array name="preferences_value">
+        <item>Monuments</item>
+        <item>Museums</item>
+        <item>Parks</item>
+        <item>Theaters</item>
+    </string-array>
 </resources>

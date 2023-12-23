@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WCLChat</string>
+    <string name="app_name">WCL</string>
     <string name="title_activity_sign_in">SignInAct</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -9,8 +9,14 @@
     <string name="location">Location</string>
     <string name="update_time">Update time</string>
     <string name="update_time_summary">Location update time</string>
+    <string name="preferences">Preferences</string>>
     <string name="track_color">Track color</string>
     <string name="track_color_summary">Choose Track color</string>
     <string name="location_disabled">Location disabled</string>
+    <string name="user_preferences">Choose your preferences</string>
     <string name="location_dialog_message">Do you want to enable GPS?</string>
+    <string name="quest_info_format">Название: %1$s\nДистанция: %2$s\nВремя маршрута: %3$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

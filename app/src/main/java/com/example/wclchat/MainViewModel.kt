@@ -21,6 +21,10 @@ class MainViewModel(db: MainDb) : ViewModel() {
     val timeData = MutableLiveData<String>()
     val tracks = dao.getAllTracks().asLiveData()
 
+    private val attractionsRepository = AttractionsRepository()
+    // LiveData, которая будет содержать список достопримечательностей
+    val attractions = MutableLiveData<List<Attraction>?>()
+
     fun insertTrack(trackItem: TrackItem) = viewModelScope.launch {
         dao.insertTrack(trackItem)
     }
@@ -36,6 +40,37 @@ class MainViewModel(db: MainDb) : ViewModel() {
             databaseReference.child(it).setValue(preferences)
         }
     }
+
+    fun loadAttractions() {
+        // Здесь вы должны сформировать ваш запрос Overpass QL
+        val query = """
+        [out:json];
+        (
+          node["leisure"="park"](around:8000,47.222078,39.720349);
+          way["leisure"="park"](around:8000,47.222078,39.720349);
+          relation["leisure"="park"](around:8000,47.222078,39.720349);
+
+          node["historic"="monument"](around:8000,47.222078,39.720349);
+          way["historic"="monument"](around:8000,47.222078,39.720349);
+          relation["historic"="monument"](around:8000,47.222078,39.720349);
+
+          node["tourism"="museum"](around:8000,47.222078,39.720349);
+          way["tourism"="museum"](around:8000,47.222078,39.720349);
+          relation["tourism"="museum"](around:8000,47.222078,39.720349);
+
+          node["amenity"="theatre"](around:8000,47.222078,39.720349);
+          way["amenity"="theatre"](around:8000,47.222078,39.720349);
+          relation["amenity"="theatre"](around:8000,47.222078,39.720349);
+        );
+        out center;
+    """.trimIndent()
+
+        attractionsRepository.getAttractions(query) { json ->
+            val attractionsList = attractionsRepository.parseAttractions(json)
+            attractions.postValue(attractionsList) // Обновляем LiveData
+        }
+    }
+
 
     class ViewModelFactory(private val db: MainDb) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
