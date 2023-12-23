@@ -20,4 +20,15 @@
             app:icon="@drawable/ic_circle"
             app:summary="@string/track_color_summary" />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/location">
+        <ListPreference
+            android:defaultValue="#FF009EDA"
+            android:entries="@array/preferences_name"
+            android:entryValues="@array/preferences_value"
+            android:key="preferences_key"
+            android:title="@string/preferences"
+            app:icon="@android:drawable/ic_menu_preferences"
+            app:summary="@string/user_preferences" />
+    </PreferenceCategory>
 </PreferenceScreen>

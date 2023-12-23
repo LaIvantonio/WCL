@@ -6,7 +6,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
+    android:background="@color/md_theme_light_onPrimary">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#000000"
+            android:background="@color/md_theme_light_primary"
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -42,7 +42,7 @@
                 android:id="@+id/chatsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#393939"
+                android:background="@color/md_theme_light_onPrimary"
                 app:layout_constraintBottom_toTopOf="@+id/sendLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -83,7 +83,7 @@
                     android:id="@+id/bSend"
                     android:layout_width="52dp"
                     android:layout_height="49dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="@color/md_theme_light_primary"
                     app:cornerRadius="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -100,9 +100,9 @@
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="80dp"
-            android:background="#000000"
+            android:background="@color/md_theme_light_onPrimary"
             android:src="@drawable/ic_arrow_downward"
-            app:backgroundTint="#D32F273E"
+            app:backgroundTint="@color/md_theme_light_primary"
             app:layout_anchor="@+id/constraintLayout"
             app:layout_anchorGravity="end|bottom"
             app:layout_constraintBottom_toTopOf="@+id/sendLayout"

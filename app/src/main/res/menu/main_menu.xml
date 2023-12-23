@@ -2,13 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:title="@string/app_name"
+        android:actionLayout="@layout/menu_title"
+        app:showAsAction="always" />
+
+    <!-- Элемент меню "Sign Out" с иконкой -->
+    <item
         android:id="@+id/sign_out"
         android:title="Sign Out"
+        android:icon="@drawable/ic_home"
         app:showAsAction="never" />
+
+    <!-- Элемент меню "WCLChat" с иконкой -->
     <item
         android:id="@+id/wcl_chat"
-        android:title="WCLChat" />
+        android:title="WCLChat"
+        android:icon="@android:drawable/ic_menu_send"
+        app:showAsAction="never" />
+
+    <!-- Элемент меню "GPS Activity" с иконкой -->
     <item
         android:id="@+id/gps_activity"
-        android:title="GPS Activity" />
+        android:title="GPS Activity"
+        android:icon="@android:drawable/ic_dialog_map"
+        app:showAsAction="never" />
 </menu>
