@@ -38,6 +38,10 @@
             android:name=".MainActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".PersonalProfileActivity"
+            android:label="Личный кабинет" >
+        </activity>
         <service
             android:name=".location.LocationService"
             android:foregroundServiceType="location"

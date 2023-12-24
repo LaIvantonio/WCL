@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_quests -> {
+                R.id.wcl_chat -> {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
@@ -85,6 +85,12 @@ class MainActivity : AppCompatActivity() {
                     auth.signOut()
                     finish()
                 }
+                R.id.nav_profile -> {
+                    // Открыть PersonalProfileActivity
+                    val intent = Intent(this, PersonalProfileActivity::class.java)
+                    startActivity(intent)
+                }
+
                 R.id.nav_quests -> {
                     // Открыть QuestsFragment
                     supportFragmentManager.beginTransaction()
